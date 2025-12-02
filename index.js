@@ -69,6 +69,34 @@ app.post("/fmd-request", async (req, res) => {
 });
 
 
+// ---------------- HELPER SHOPIFY GRAPHQL -----------------
+
+async function shopifyGraphQL(query, variables = {}) {
+  const endpoint = `https://${process.env.SHOPIFY_STORE_DOMAIN}/admin/api/2024-01/graphql.json`;
+
+  const res = await fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "X-Shopify-Access-Token": process.env.SHOPIFY_ADMIN_API_TOKEN,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query,
+      variables
+    }),
+  });
+
+  const json = await res.json();
+
+  if (json.errors) {
+    console.error("GraphQL Errors:", json.errors);
+  }
+
+  return json.data;
+}
+
+
+
 async function getEnterprise(slug) {
   const query = `
     {
