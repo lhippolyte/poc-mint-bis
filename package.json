@@ -6,13 +6,9 @@
   "scripts": {
     "start": "node index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
-    "@sendgrid/mail": "^8.1.0",
-    "crypto": "^1.0.1",
+    "@sendgrid/mail": "^8.1.6",
+    "body-parser": "^2.2.1",
     "express": "^5.1.0"
   }
 }
