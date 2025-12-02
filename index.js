@@ -74,6 +74,9 @@ app.post("/fmd-request", async (req, res) => {
 async function shopifyGraphQL(query, variables = {}) {
   const endpoint = `https://${process.env.SHOPIFY_STORE_DOMAIN}/admin/api/2024-01/graphql.json`;
 
+  console.log("Shopify GraphQL endpoint:", endpoint);
+  console.log("Shopify GraphQL process.env.SHOPIFY_ADMIN_API_TOKEN:", process.env.SHOPIFY_ADMIN_API_TOKEN);
+
   const res = await fetch(endpoint, {
     method: "POST",
     headers: {
