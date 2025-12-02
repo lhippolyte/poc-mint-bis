@@ -69,6 +69,33 @@ app.post("/fmd-request", async (req, res) => {
 });
 
 
+async function getEnterprise(slug) {
+  const query = `
+    {
+      metaobject(handle: {type: "enterprise", handle: "${slug}"}) {
+        id
+        fields {
+          key
+          value
+        }
+      }
+    }
+  `;
+
+  const response = await shopifyGraphQL(query);
+  if (!response.metaobject) return null;
+
+  const obj = {};
+  for (const f of response.metaobject.fields) {
+    obj[f.key] = JSON.parseOrString(f.value);
+  }
+
+  obj.id = response.metaobject.id;
+  return obj;
+}
+
+
+
 async function updateEnterprise(id, fields) {
   const mutation = `
     mutation UpdateEnterprise($id: ID!, $fields: [MetaobjectFieldInput!]!) {
